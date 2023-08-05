@@ -2,7 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from "@/views/home/HomeView";
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-import Layout from '../layout/Layout'
+import Layout from '../layout/Layout';
+// import { getToken } from "~/utils/auth.js";
+
+
 
 const routes = [
     {
@@ -170,6 +173,36 @@ const routes = [
                 component: () => import("@/views/persistentvolume/PersistentVolume.vue")
             }
         ]
+    },
+    {
+        path: "/manage",
+        name: "系统管理",
+        component: Layout,
+        icon: "menu",
+        meta: {title: "系统管理", requireAuth: true},
+        children: [
+            {
+                path: "/manage/audit",
+                name: "操作审计",
+                icon: "el-icon-document-add",
+                meta: {title:"操作审计", requireAuth: true},
+                component: () => import("@/views/audit/AuditView.vue")
+            },
+            {
+                path: "/manage/user",
+                name: "个人中心",
+                icon: "el-icon-ship",
+                meta: {title: "个人中心", requireAuth: true},
+                component: () => import("@/views/namespace/Namespace.vue")
+            },
+            // {
+            //     path: "/manage/persistentvolume",
+            //     name: "PersistentVolume",
+            //     icon: "el-icon-ship",
+            //     meta: {title: "PersistemtVolume", requireAuth: true},
+            //     component: () => import("@/views/persistentvolume/PersistentVolume.vue")
+            // }
+        ]
     }
 ]
 
@@ -194,6 +227,17 @@ const router = createRouter({
 router.beforeEach((to,from,next) => {
     // 启动进度条
     NProgress.start()
+    // const token = getToken();
+    // // 没有登陆强制跳转回登陆页
+    // if (!token && to.path !== "/login") {
+    //   return next({ path: "/login" });
+    // }
+    // // 防止重复登陆
+    // if (token && to.path === "/login") {
+    //   message("请勿重复登陆", "warning ");
+    //   return next({ path: from.path });
+    // }
+  
     // 设置头部
     if (to.meta.title) {
         document.title = to.meta.title

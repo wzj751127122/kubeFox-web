@@ -15,7 +15,7 @@ module.exports = defineConfig({
       }
     }
   },
-  publicPath: '/static/',
+  // publicPath: '/static/',
   transpileDependencies: true,
   // 关闭语法检测
   lintOnSave: false

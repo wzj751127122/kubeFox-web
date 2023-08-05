@@ -1,4 +1,4 @@
-import router from './index'
+import router from './index';
 
 
 const whiteList = ["/login", "/authredirect"];
